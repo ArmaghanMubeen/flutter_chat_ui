@@ -51,7 +51,7 @@ class AttachmentButton extends StatelessWidget {
               : InheritedChatTheme.of(context).theme.attachmentButtonIcon ??
                   Image.asset(
                     'assets/icon-attachment.png',
-                    color: InheritedChatTheme.of(context).theme.inputTextColor,
+                    color: Color(0xFF263238),
                     package: 'flutter_chat_ui',
                   ),
           onPressed: isLoading ? null : onPressed,

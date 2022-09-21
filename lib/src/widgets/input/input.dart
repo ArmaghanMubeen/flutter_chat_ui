@@ -63,8 +63,7 @@ class _InputState extends State<Input> {
       }
     },
   );
-
-  bool _sendButtonVisible = false;
+  
   late TextEditingController _textController;
 
   @override
@@ -73,16 +72,11 @@ class _InputState extends State<Input> {
 
     _textController =
         widget.options.textEditingController ?? InputTextFieldController();
-    _handleSendButtonVisibilityModeChange();
   }
 
   @override
   void didUpdateWidget(covariant Input oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.options.sendButtonVisibilityMode !=
-        oldWidget.options.sendButtonVisibilityMode) {
-      _handleSendButtonVisibilityModeChange();
-    }
   }
 
   @override
@@ -98,20 +92,6 @@ class _InputState extends State<Input> {
         child: _inputBuilder(),
       );
 
-  void _handleSendButtonVisibilityModeChange() {
-    _textController.removeListener(_handleTextControllerChange);
-    if (widget.options.sendButtonVisibilityMode ==
-        SendButtonVisibilityMode.hidden) {
-      _sendButtonVisible = false;
-    } else if (widget.options.sendButtonVisibilityMode ==
-        SendButtonVisibilityMode.editing) {
-      _sendButtonVisible = _textController.text.trim() != '';
-      _textController.addListener(_handleTextControllerChange);
-    } else {
-      _sendButtonVisible = true;
-    }
-  }
-
   void _handleSendPressed() {
     final trimmedText = _textController.text.trim();
     if (trimmedText != '') {
@@ -123,13 +103,6 @@ class _InputState extends State<Input> {
       }
     }
   }
-
-  void _handleTextControllerChange() {
-    setState(() {
-      _sendButtonVisible = _textController.text.trim() != '';
-    });
-  }
-
   Widget _inputBuilder() {
     final query = MediaQuery.of(context);
     final buttonPadding = InheritedChatTheme.of(context)
@@ -152,7 +125,7 @@ class _InputState extends State<Input> {
           EdgeInsets.fromLTRB(
             widget.onAttachmentPressed != null ? 0 : 24,
             0,
-            _sendButtonVisible ? 0 : 24,
+           24,
             0,
           ),
         );
@@ -163,7 +136,7 @@ class _InputState extends State<Input> {
         padding: InheritedChatTheme.of(context).theme.inputMargin,
         child: Material(
           borderRadius: InheritedChatTheme.of(context).theme.inputBorderRadius,
-          color: InheritedChatTheme.of(context).theme.inputBackgroundColor,
+          color: Colors.white,
           child: Container(
             decoration:
                 InheritedChatTheme.of(context).theme.inputContainerDecoration,
@@ -182,9 +155,7 @@ class _InputState extends State<Input> {
                     padding: textPadding,
                     child: TextField(
                       controller: _textController,
-                      cursorColor: InheritedChatTheme.of(context)
-                          .theme
-                          .inputTextCursorColor,
+                      cursorColor: Color(0xFF263238),
                       decoration: InheritedChatTheme.of(context)
                           .theme
                           .inputTextDecoration
@@ -193,10 +164,7 @@ class _InputState extends State<Input> {
                                 .theme
                                 .inputTextStyle
                                 .copyWith(
-                                  color: InheritedChatTheme.of(context)
-                                      .theme
-                                      .inputTextColor
-                                      .withOpacity(0.5),
+                                  color: Colors.grey,
                                 ),
                             hintText:
                                 InheritedL10n.of(context).l10n.inputPlaceholder,
@@ -211,9 +179,7 @@ class _InputState extends State<Input> {
                           .theme
                           .inputTextStyle
                           .copyWith(
-                            color: InheritedChatTheme.of(context)
-                                .theme
-                                .inputTextColor,
+                            color: Colors.black,
                           ),
                       textCapitalization: TextCapitalization.sentences,
                     ),
@@ -223,12 +189,9 @@ class _InputState extends State<Input> {
                   constraints: BoxConstraints(
                     minHeight: buttonPadding.bottom + buttonPadding.top + 24,
                   ),
-                  child: Visibility(
-                    visible: _sendButtonVisible,
-                    child: SendButton(
-                      onPressed: _handleSendPressed,
-                      padding: buttonPadding,
-                    ),
+                  child: SendButton(
+                    onPressed: _handleSendPressed,
+                    padding: buttonPadding,
                   ),
                 ),
               ],

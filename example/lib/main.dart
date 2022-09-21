@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: ChatPage(),
       );
 }
@@ -45,18 +46,50 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Chat(
-          messages: _messages,
-          onAttachmentPressed: _handleAttachmentPressed,
-          onMessageTap: _handleMessageTap,
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: _handleSendPressed,
-          showUserAvatars: true,
-          showUserNames: true,
-          user: _user,
-        ),
-      );
+  Widget build(BuildContext context) {
+    double screenWidth=MediaQuery.of(context).size.width;
+    double blockWidth=screenWidth/100;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF263238),
+        actions: [
+          Container(
+            width: screenWidth,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 2 * blockWidth,
+                ),
+                const Icon(CupertinoIcons.back),
+                SizedBox(
+                  width: 5 * blockWidth,
+                ),
+                const CircleAvatar(
+                  backgroundImage:  NetworkImage(
+                    "https://i0.wp.com/www.dafontfree.co/wp-content/uploads/2021/11/Amazon-Logo-Font-1-scaled.jpg?fit=2560%2C1578&ssl=1",
+                  ),
+                ),
+                SizedBox(
+                  width: 2 * blockWidth,
+                ),
+                const Text('Amazon Premium'),
+              ],
+            ),
+          ),
+        ],
+      ),
+      body: Chat(
+        messages: _messages,
+        onAttachmentPressed: _handleAttachmentPressed,
+        onMessageTap: _handleMessageTap,
+        onPreviewDataFetched: _handlePreviewDataFetched,
+        onSendPressed: _handleSendPressed,
+        showUserAvatars: true,
+        showUserNames: true,
+        user: _user,
+      ),
+    );
+  }
 
   void _addMessage(types.Message message) {
     setState(() {
