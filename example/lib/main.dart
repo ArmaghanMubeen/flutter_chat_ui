@@ -13,6 +13,7 @@ import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   initializeDateFormatting().then((_) => runApp(const MyApp()));
@@ -47,8 +48,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth=MediaQuery.of(context).size.width;
-    double blockWidth=screenWidth/100;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double blockWidth = screenWidth / 100;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF263238),
@@ -56,23 +57,29 @@ class _ChatPageState extends State<ChatPage> {
           Container(
             width: screenWidth,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 2 * blockWidth,
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 2 * blockWidth,
+                    ),
+                    const Icon(CupertinoIcons.back),
+                    SizedBox(
+                      width: 5 * blockWidth,
+                    ),
+                    const CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        "https://i0.wp.com/www.dafontfree.co/wp-content/uploads/2021/11/Amazon-Logo-Font-1-scaled.jpg?fit=2560%2C1578&ssl=1",
+                      ),
+                    ),
+                    SizedBox(
+                      width: 2 * blockWidth,
+                    ),
+                    const Text('Amazon Premium'),
+                  ],
                 ),
-                const Icon(CupertinoIcons.back),
-                SizedBox(
-                  width: 5 * blockWidth,
-                ),
-                const CircleAvatar(
-                  backgroundImage:  NetworkImage(
-                    "https://i0.wp.com/www.dafontfree.co/wp-content/uploads/2021/11/Amazon-Logo-Font-1-scaled.jpg?fit=2560%2C1578&ssl=1",
-                  ),
-                ),
-                SizedBox(
-                  width: 2 * blockWidth,
-                ),
-                const Text('Amazon Premium'),
+                SvgPicture.asset('packages/flutter_chat_ui/assets/shop.svg', color: Colors.white,height:24,width:24),
               ],
             ),
           ),

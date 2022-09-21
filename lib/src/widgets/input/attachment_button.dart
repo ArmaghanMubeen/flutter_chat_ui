@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../state/inherited_chat_theme.dart';
 import '../state/inherited_l10n.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// A class that represents attachment button widget.
 class AttachmentButton extends StatelessWidget {
@@ -49,10 +50,10 @@ class AttachmentButton extends StatelessWidget {
                   ),
                 )
               : InheritedChatTheme.of(context).theme.attachmentButtonIcon ??
-                  Image.asset(
-                    'assets/icon-attachment.png',
+                  SvgPicture.asset(
+                    'packages/flutter_chat_ui/assets/attachment.svg',
                     color: Color(0xFF263238),
-                    package: 'flutter_chat_ui',
+                    height:24,width:24,
                   ),
           onPressed: isLoading ? null : onPressed,
           padding: padding,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../state/inherited_chat_theme.dart';
 import '../state/inherited_l10n.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 /// A class that represents send button widget.
 class SendButton extends StatelessWidget {
   /// Creates send button widget.
@@ -28,10 +28,10 @@ class SendButton extends StatelessWidget {
             minWidth: 24,
           ),
           icon: InheritedChatTheme.of(context).theme.sendButtonIcon ??
-              Image.asset(
-                'assets/icon-send.png',
-                color: Color(0xFF263238),
-                package: 'flutter_chat_ui',
+              SvgPicture.asset(
+                'packages/flutter_chat_ui/assets/send.svg',
+                height:24,width:24,
+                color: Color(0xFF263238),                
               ),
           onPressed: onPressed,
           padding: padding,
